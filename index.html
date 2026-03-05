@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lesson 1: The Golden Rule of DC Electricity</title>
     <style>
-        /* This is where the dark background colors are set */
         body {
             font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
             background-color: #1a1a1a; 
@@ -20,9 +19,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        h1 {
-            color: #ffffff;
-        }
+        h1 { color: #ffffff; }
         .lesson-image {
             width: 100%;
             border-radius: 10px;
@@ -41,9 +38,9 @@
             width: 30%;
             font-weight: bold;
         }
-        .volt { background-color: #FF8C00; } /* Orange */
-        .ohm { background-color: #8A2BE2; }  /* Purple */
-        .amp { background-color: #00BFFF; }  /* Blue */
+        .volt { background-color: #FF8C00; }
+        .ohm { background-color: #8A2BE2; }
+        .amp { background-color: #00BFFF; }
     </style>
 </head>
 <body>
@@ -64,69 +61,75 @@
             <div class="box amp">AMP<br>The Result (Flow)</div>
         </div>
 
-        <p style="font-size: 1.2em; margin-top: 30px;">
-            <strong>Remember:</strong> You can add pressure/power (Volts), you can add restrictors (Ohms), but you can't add Amps. They are just the result of the push meeting the squeeze!
-        </p>
-<div style="background-color: #3a3a3a; padding: 25px; border-radius: 10px; margin-top: 40px; text-align: left;">
-            <h3 style="color: #FF8C00; text-align: center; margin-top: 0;">Lesson 1 Quick Quiz</h3>
-
-            <div style="margin-bottom: 15px;">
-                <p><strong>1. What does a Volt do in a circuit?</strong></p>
-                <input type="radio" name="q1" value="wrong"> A) It restricts the flow.<br>
-                <input type="radio" name="q1" value="correct"> B) It provides the engine or push.<br>
-                <input type="radio" name="q1" value="wrong"> C) It is the result of the flow.<br>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <p><strong>2. What do Ohms represent?</strong></p>
-                <input type="radio" name="q2" value="wrong"> A) The push (Pressure).<br>
-                <input type="radio" name="q2" value="correct"> B) The squeeze (Restriction).<br>
-                <input type="radio" name="q2" value="wrong"> C) The working flow.<br>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <p><strong>3. How do you calculate Amps?</strong></p>
-                <input type="radio" name="q3" value="wrong"> A) Ohms ÷ Volts<br>
-                <input type="radio" name="q3" value="wrong"> B) Volts + Ohms<br>
-                <input type="radio" name="q3" value="correct"> C) Volts ÷ Ohms<br>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <p><strong>4. True or False: You can add Amps directly to a circuit.</strong></p>
-                <input type="radio" name="q4" value="wrong"> True<br>
-                <input type="radio" name="q4" value="correct"> False<br>
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <p><strong>5. True or False: Amps are just the result of the push meeting the squeeze.</strong></p>
-                <input type="radio" name="q5" value="correct"> True<br>
-                <input type="radio" name="q5" value="wrong"> False<br>
-            </div>
-
-            <button onclick="checkQuiz()" style="background-color: #00BFFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Check My Answers</button>
-            <p id="quiz-result" style="font-size: 1.2em; font-weight: bold; color: #FF8C00; margin-top: 15px;"></p>
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin-top: 40px; border-left: 5px solid #00BFFF; text-align: left;">
+            <h3 style="color: #00BFFF; margin-top: 0;">Lesson Wrap-Up</h3>
+            <p style="font-size: 1.1em; line-height: 1.6; color: #e0e0e0;">
+                Before you test your knowledge, let's review:<br><br>
+                Meet the three characters that run every DC circuit — and they each have one job.<br><br>
+                ⚡ <strong>Volt is the push.</strong> Volt is what gets things moving. No Volt, nothing happens.<br><br>
+                🛑 <strong>Ohm is the squeeze.</strong> Ohm pushes back against Volt. More Ohm means less gets through.<br><br>
+                🌊 <strong>Amp is the result.</strong> Amp is what you actually get after Volt fights through Ohm. Amp doesn't decide anything — Amp is what the circuit produces.<br><br>
+                This is why the rule is: <strong style="color: white;">Volts ÷ Ohms = Amps</strong><br><br>
+                Amp is always the answer. You can control Volt. You can control Ohm. Amp just does the math.
+            </p>
         </div>
 
+        <div style="background-color: #3a3a3a; padding: 25px; border-radius: 10px; margin-top: 20px; text-align: left;" id="quiz-container">
+            </div>
+
         <script>
+            // The Question Bank
+            const questionBank = [
+                { q: "What does a Volt do in a circuit?", opts: ["It restricts the flow.", "It provides the engine or push.", "It is the result of the flow."], a: 1 },
+                { q: "What do Ohms represent?", opts: ["The push (Pressure).", "The squeeze (Restriction).", "The working flow."], a: 1 },
+                { q: "How do you calculate Amps?", opts: ["Ohms ÷ Volts", "Volts + Ohms", "Volts ÷ Ohms"], a: 2 },
+                { q: "True or False: You can add Amps directly to a circuit.", opts: ["True", "False"], a: 1 },
+                { q: "True or False: Amps are just the result of the push meeting the squeeze.", opts: ["True", "False"], a: 0 },
+                { q: "If you increase the Volts (push) but keep the Ohms the same, what happens to the Amps?", opts: ["They go up.", "They go down.", "They stay the same."], a: 0 },
+                { q: "If you increase the Ohms (restriction), what happens to the flow (Amps)?", opts: ["It increases.", "It decreases.", "It stays the same."], a: 1 },
+                { q: "In the formula A = V / R, what does the 'R' stand for?", opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1 },
+                { q: "Which of these is like the 'water pressure' in our analogy?", opts: ["Amps", "Ohms", "Volts"], a: 2 },
+                { q: "To get more Amps to flow, you could...", opts: ["Increase the Ohms", "Decrease the Volts", "Increase the Volts"], a: 2 }
+            ];
+
+            function loadQuiz() {
+                const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+                const selectedQuestions = shuffled.slice(0, 5);
+                
+                let html = '<h3 style="color: #FF8C00; text-align: center; margin-top: 0;">Lesson 1 Quick Quiz</h3>';
+                
+                selectedQuestions.forEach((item, index) => {
+                    html += '<div style="margin-bottom: 15px;">';
+                    html += '<p><strong>' + (index + 1) + '. ' + item.q + '</strong></p>';
+                    item.opts.forEach((opt, i) => {
+                        let isCorrect = (i === item.a) ? 'correct' : 'wrong';
+                        html += '<label style="display: block; cursor: pointer; margin-bottom: 5px;">';
+                        html += '<input type="radio" name="q' + index + '" value="' + isCorrect + '"> ' + opt;
+                        html += '</label>';
+                    });
+                    html += '</div>';
+                });
+                
+                html += '<button onclick="checkQuiz()" style="background-color: #00BFFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;">Check My Answers</button>';
+                html += '<button onclick="loadQuiz()" style="background-color: #666; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; margin-left: 10px;">Retake Quiz</button>';
+                html += '<p id="quiz-result" style="font-size: 1.2em; font-weight: bold; color: #FF8C00; margin-top: 15px;"></p>';
+                
+                document.getElementById('quiz-container').innerHTML = html;
+            }
+
             function checkQuiz() {
                 let score = 0;
-                let q1 = document.querySelector('input[name="q1"]:checked');
-                let q2 = document.querySelector('input[name="q2"]:checked');
-                let q3 = document.querySelector('input[name="q3"]:checked');
-                let q4 = document.querySelector('input[name="q4"]:checked');
-                let q5 = document.querySelector('input[name="q5"]:checked');
-
-                if (q1 && q1.value === "correct") score++;
-                if (q2 && q2.value === "correct") score++;
-                if (q3 && q3.value === "correct") score++;
-                if (q4 && q4.value === "correct") score++;
-                if (q5 && q5.value === "correct") score++;
-
+                for(let i=0; i<5; i++) {
+                    let selected = document.querySelector('input[name="q' + i + '"]:checked');
+                    if (selected && selected.value === "correct") {
+                        score++;
+                    }
+                }
                 document.getElementById("quiz-result").innerText = "You scored " + score + " out of 5!";
             }
+
+            window.onload = loadQuiz;
         </script>
-        
-        
     </div>
 
 </body>
