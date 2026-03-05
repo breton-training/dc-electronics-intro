@@ -67,6 +67,72 @@
         <p style="font-size: 1.2em; margin-top: 30px;">
             <strong>Remember:</strong> You can add pressure/power (Volts), you can add restrictors (Ohms), but you can't add Amps. They are just the result of the push meeting the squeeze!
         </p>
+<div style="background-color: #3a3a3a; padding: 25px; border-radius: 10px; margin-top: 40px; text-align: left;">
+            <h3 style="color: #FF8C00; text-align: center; margin-top: 0;">Lesson 1 Quick Quiz</h3>
+
+            <div style="margin-bottom: 15px;">
+                <p><strong>1. What does a Volt do in a circuit?</strong></p>
+                <input type="radio" name="q1" value="wrong"> A) It restricts the flow.<br>
+                <input type="radio" name="q1" value="correct"> B) It provides the engine or push.<br>
+                <input type="radio" name="q1" value="wrong"> C) It is the result of the flow.<br>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p><strong>2. What do Ohms represent?</strong></p>
+                <input type="radio" name="q2" value="wrong"> A) The push (Pressure).<br>
+                <input type="radio" name="q2" value="correct"> B) The squeeze (Restriction).<br>
+                <input type="radio" name="q2" value="wrong"> C) The working flow.<br>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p><strong>3. How do you calculate Amps?</strong></p>
+                <input type="radio" name="q3" value="wrong"> A) Ohms ÷ Volts<br>
+                <input type="radio" name="q3" value="wrong"> B) Volts + Ohms<br>
+                <input type="radio" name="q3" value="correct"> C) Volts ÷ Ohms<br>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p><strong>4. True or False: You can add Amps directly to a circuit.</strong></p>
+                <input type="radio" name="q4" value="wrong"> True<br>
+                <input type="radio" name="q4" value="correct"> False<br>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <p><strong>5. True or False: Amps are just the result of the push meeting the squeeze.</strong></p>
+                <input type="radio" name="q5" value="correct"> True<br>
+                <input type="radio" name="q5" value="wrong"> False<br>
+            </div>
+
+            <button onclick="checkQuiz()" style="background-color: #00BFFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Check My Answers</button>
+            <p id="quiz-result" style="font-size: 1.2em; font-weight: bold; color: #FF8C00; margin-top: 15px;"></p>
+        </div>
+
+        <script>
+            function checkQuiz() {
+                let score = 0;
+                let q1 = document.querySelector('input[name="q1"]:checked');
+                let q2 = document.querySelector('input[name="q2"]:checked');
+                let q3 = document.querySelector('input[name="q3"]:checked');
+                let q4 = document.querySelector('input[name="q4"]:checked');
+                let q5 = document.querySelector('input[name="q5"]:checked');
+
+                if (q1 && q1.value === "correct") score++;
+                if (q2 && q2.value === "correct") score++;
+                if (q3 && q3.value === "correct") score++;
+                if (q4 && q4.value === "correct") score++;
+                if (q5 && q5.value === "correct") score++;
+
+                document.getElementById("quiz-result").innerText = "You scored " + score + " out of 5!";
+            }
+        </script>
+        ```
+
+5. Click **Commit changes...** at the top right to save it.
+
+Wait a minute, refresh your live page (**Ctrl + F5**), and test out the buttons! I added a little built-in "script" at the bottom of that block that handles adding up the score and showing the result when they click the button. 
+
+Would you like me to leave this tab as-is while you go collect the posterboard photos?
+        
     </div>
 
 </body>
