@@ -1,178 +1,556 @@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lesson 1: The Golden Rule of DC Electricity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --volt:   #FF8C00;
+            --ohm:    #9B30FF;
+            --amp:    #00BFFF;
+            --bg:     #0f0f1a;
+            --card:   #1c1c2e;
+            --card2:  #22223a;
+            --text:   #f0f0ff;
+            --muted:  #9999bb;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
-            background-color: #1a1a1a; 
-            color: #e0e0e0;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 24px 16px 60px;
+            background-image:
+                radial-gradient(ellipse at 10% 0%, rgba(255,140,0,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 100%, rgba(0,191,255,0.08) 0%, transparent 50%);
         }
+
         .container {
-            max-width: 800px;
+            max-width: 780px;
             margin: 0 auto;
-            background: #2d2d2d; 
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        h1 { color: #ffffff; }
-        .lesson-image {
-            width: 100%;
-            border-radius: 10px;
-            border: 3px solid #1a1a1a;
-            margin: 20px 0;
+
+        /* ── HEADER ── */
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 28px;
+            animation: fadeDown 0.6s ease both;
         }
-        .concept-box {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .box {
-            padding: 15px;
-            border-radius: 10px;
+        .lesson-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--volt), #ff4500);
             color: white;
-            width: 30%;
-            font-weight: bold;
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            padding: 4px 16px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
-        .volt { background-color: #FF8C00; }
-        .ohm { background-color: #8A2BE2; }
-        .amp { background-color: #00BFFF; }
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(1.8em, 5vw, 2.8em);
+            color: white;
+            line-height: 1.15;
+            text-shadow: 0 2px 20px rgba(255,140,0,0.3);
+        }
+
+        /* ── FORMULA BANNER ── */
+        .formula-banner {
+            background: linear-gradient(135deg, #1c1c2e, #2a2040);
+            border: 2px solid rgba(255,140,0,0.4);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin: 0 0 28px;
+            animation: fadeDown 0.7s ease both;
+            box-shadow: 0 0 30px rgba(255,140,0,0.12);
+        }
+        .formula-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2em, 6vw, 3.2em);
+            letter-spacing: 2px;
+        }
+        .formula-text .v { color: var(--volt); }
+        .formula-text .o { color: var(--ohm); }
+        .formula-text .a { color: var(--amp); }
+        .formula-text .sym { color: rgba(255,255,255,0.5); margin: 0 6px; }
+        .formula-sub {
+            font-size: 0.9em;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        /* ── MAIN IMAGE ── */
+        .hero-image {
+            width: 100%;
+            border-radius: 14px;
+            border: 3px solid rgba(255,255,255,0.08);
+            margin-bottom: 28px;
+            animation: fadeUp 0.7s 0.2s ease both;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+
+        /* ── CHARACTER CARDS ── */
+        .char-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 6px solid transparent;
+            animation: fadeUp 0.5s ease both;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .char-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .char-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .char-card.volt { border-left-color: var(--volt); }
+        .char-card.volt::before { background: var(--volt); }
+        .char-card.ohm  { border-left-color: var(--ohm);  }
+        .char-card.ohm::before  { background: var(--ohm);  }
+        .char-card.amp  { border-left-color: var(--amp);  }
+        .char-card.amp::before  { background: var(--amp);  }
+
+        .char-img {
+            width: 100px;
+            min-width: 100px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+        .char-text { flex: 1; }
+        .char-name {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.4em;
+            margin-bottom: 6px;
+        }
+        .volt .char-name { color: var(--volt); }
+        .ohm  .char-name { color: #cc88ff; }
+        .amp  .char-name { color: var(--amp); }
+
+        .char-text p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #d0d0ee;
+        }
+        .char-text p strong {
+            color: white;
+        }
+
+        /* ── RULE BOX ── */
+        .rule-box {
+            background: linear-gradient(135deg, #1a1a30, #252540);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 28px 0;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+        .rule-box p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #c8c8e8;
+            margin-bottom: 14px;
+        }
+        .rule-highlight {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(1.6em, 4vw, 2.2em);
+            color: white;
+        }
+        .rule-highlight .v { color: var(--volt); }
+        .rule-highlight .o { color: #cc88ff; }
+        .rule-highlight .a { color: var(--amp); }
+
+        /* ── WRAPUP ── */
+        .wrapup {
+            background: var(--card2);
+            border: 2px solid rgba(0,191,255,0.25);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 28px 0;
+            animation: fadeUp 0.6s 0.4s ease both;
+        }
+        .wrapup h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5em;
+            color: var(--amp);
+            margin-bottom: 18px;
+        }
+        .wrapup-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        .wrapup-row img {
+            width: 60px;
+            min-width: 60px;
+            border-radius: 8px;
+        }
+        .wrapup-row p {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #d0d0ee;
+        }
+        .wrapup-row p strong { color: white; font-size: 1.05em; }
+
+        /* ── QUIZ ── */
+        #quiz-container {
+            animation: fadeUp 0.6s 0.5s ease both;
+        }
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .quiz-header img {
+            height: 110px;
+            margin-bottom: 10px;
+        }
+        .quiz-header h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8em;
+            color: var(--volt);
+        }
+        .quiz-q {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            border: 2px solid rgba(255,255,255,0.06);
+            text-align: left;
+        }
+        .quiz-q p {
+            font-size: 1.05em;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: white;
+        }
+        .quiz-q label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 9px 14px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 1em;
+            color: #d0d0ee;
+            border: 2px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .quiz-q label:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .quiz-q input[type="radio"] {
+            accent-color: var(--amp);
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+        }
+
+        .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+        .btn {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1em;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+        .btn-check { background: linear-gradient(135deg, var(--amp), #0088cc); color: white; }
+        .btn-reset { background: #3a3a55; color: #aaa; }
+
+        .result-card {
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .result-card.correct { background: rgba(0,200,100,0.12); border: 2px solid rgba(0,200,100,0.3); }
+        .result-card.wrong   { background: rgba(255,80,80,0.10); border: 2px solid rgba(255,80,80,0.25); }
+        .result-card .result-label { font-size: 1em; font-weight: 800; margin-bottom: 4px; }
+        .result-card.correct .result-label { color: #44ff88; }
+        .result-card.wrong   .result-label { color: #ff7777; }
+        .result-card .result-expl { font-size: 0.9em; color: var(--muted); margin-top: 4px; }
+
+        .score-banner {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6em;
+            text-align: center;
+            padding: 16px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #1c1c2e, #2a2040);
+            border: 2px solid rgba(255,140,0,0.3);
+            color: white;
+        }
+        .warning-msg {
+            color: #ff6666;
+            font-weight: 800;
+            font-size: 1em;
+            padding: 12px 16px;
+            background: rgba(255,60,60,0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(255,60,60,0.2);
+            margin-top: 14px;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 500px) {
+            .char-card { flex-direction: column; text-align: center; }
+            .char-img { width: 80px; }
+            .wrapup-row { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
+<div class="container">
 
-    <div class="container">
-        <h1>Current Flow: The Golden Rule of DC Electricity</h1>
-        
-        <div style="text-align: center; margin-bottom: 20px;">
-            <h2 style="margin-bottom: 5px; color: white;">Volts ÷ Ohms = Amps</h2>
-            <p style="color: #aaaaaa; margin-top: 0;"><em>
-            
-            </em></p>
-        </div>
-        
-        <img src="current_flow_1.png" alt="Volt pushing Ohm squeezing Amp flowing" class="lesson-image">
-
-        <div class="concept-box">
-            <div class="box volt">VOLT<br>The Engine (Push)</div>
-            <div class="box ohm">OHM<br>The Squeeze (Restriction)</div>
-            <div class="box amp">AMP<br>The Result (Flow)</div>
-        </div>
-
-        <p style="font-size: 1.1em; line-height: 1.6; color: #e0e0e0;">ELECTRICITY needs three things to work — and they always work together. First, there has to be a push — that push is called VOLTAGE, and it's what gets ELECTRONS moving through a wire. But here's the thing — the wire and parts inside a circuit actually push back against that flow. That pushback is called RESISTANCE (the squeeze), and it's measured in OHMS. The electrons that actually make it through and do the work — that moving flow — is called CURRENT, measured in AMPS. The big idea is this: you control the push, you control the resistance, and the current is what you get as the result. That relationship has a name — it's called OHM'S LAW, and it's the rule behind every single circuit ever built.</p>
-
-        
-
-       <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin-top: 40px; border-left: 5px solid #00BFFF; text-align: left;">
-            <h3 style="color: #00BFFF; margin-top: 0;">Lesson Wrap-Up</h3>
-            <p style="font-size: 1.1em; line-height: 1.6; color: #e0e0e0;">
-                Before you test your knowledge, let's review:<br><br>
-                Meet the three characters that run every DC circuit:<br><br>
-                <img src="icon-volt.png" alt="Volt Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Volt is the push.</strong> Volt is what gets things moving. No Volt, nothing happens.<br><br>
-                <img src="icon-ohm.png" alt="Ohm Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Ohm is the squeeze.</strong> Ohm pushes back against Volt. More Ohm means less gets through.<br><br>
-                <img src="icon-amp.png" alt="Amp Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Amp is the result.</strong> Amp is what you actually get after Volt fights through Ohm. Amp doesn't decide anything — Amp is what the circuit produces.<br><br>
-                This is why the rule is: <strong style="color: white;">Volts ÷ Ohms = Amps</strong><br><br>
-                Amp is always the answer. You can control Volt. You can control Ohm. Amp just does the math.
-            </p>
-        </div>
-        <!-- quiz container will be populated by script -->
-        <div id="quiz-container" style="margin-top:40px;"></div>
-        <script>
-            // The Question Bank (15 questions)
-            const questionBank = [
-                { q: "What does a Volt do in a circuit?", opts: ["It restricts the flow.", "It provides the engine or push.", "It is the result of the flow."], a: 1,
-                  expl: "Volt is the push that makes current flow." },
-                { q: "What do Ohms represent?", opts: ["The push (Pressure).", "The squeeze (Restriction).", "The working flow."], a: 1,
-                  expl: "Ohms are resistance; more ohms means less current." },
-                { q: "How do you calculate Amps?", opts: ["Ohms ÷ Volts", "Volts + Ohms", "Volts ÷ Ohms"], a: 2,
-                  expl: "Ohm's law: current equals voltage divided by resistance." },
-                { q: "True or False: You can add Amps directly to a circuit.", opts: ["True", "False"], a: 1,
-                  expl: "Amps are the result of voltage and resistance; you can't just add them." },
-                { q: "True or False: Amps are just the result of the push meeting the squeeze.", opts: ["True", "False"], a: 0,
-                  expl: "Correct – current is the outcome of voltage fighting resistance." },
-                { q: "If you increase the Volts (push) but keep the Ohms the same, what happens to the Amps?", opts: ["They go up.", "They go down.", "They stay the same."], a: 0,
-                  expl: "Higher voltage pushes more current through the same resistance." },
-                { q: "If you increase the Ohms (restriction), what happens to the flow (Amps)?", opts: ["It increases.", "It decreases.", "It stays the same."], a: 1,
-                  expl: "More resistance reduces the current for the same voltage." },
-                { q: "In the formula A = V / R, what does the 'R' stand for?", opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1,
-                  expl: "'R' is resistance, measured in ohms." },
-                { q: "Which of these is most like voltage?", opts: ["Amps", "Ohms", "Volts"], a: 2,
-                  expl: "Voltage is the push or pressure in the circuit." },
-                { q: "True or False: To get more Amps to flow, you increase the Volts.", opts: ["True", "False"], a: 0,
-                  expl: "With resistance constant, increasing voltage raises current." },
-                { q: "True or False: Voltage is measured in Amperes.", opts: ["True", "False"], a: 1,
-                  expl: "Voltage is measured in volts; amperes measure current." },
-                { q: "Which part of Ohm's law do you rearrange to solve for resistance?", opts: ["R = V / I", "I = V × R", "V = I × R"], a: 0,
-                  expl: "Solving for R gives R = V / I." },
-                { q: "What happens to current if you halve the voltage and keep resistance constant?", opts: ["It halves", "It doubles", "It stays the same"], a: 0,
-                  expl: "Current is proportional to voltage, so it halves." },
-                { q: "True or False: Increasing resistance while holding voltage constant increases current.", opts: ["True", "False"], a: 1,
-                  expl: "More resistance lowers current when voltage doesn't change." },
-                { q: "Which icon represents the result of the circuit?", opts: ["Volt", "Ohm", "Amp"], a: 2,
-                  expl: "Amp represents current, the result of the circuit." }
-            ];
-
-            function loadQuiz() {
-                // pick 3 multiple-choice and 2 true/false questions
-                const mc = questionBank.filter(q => q.opts.length > 2);
-                const tf = questionBank.filter(q => q.opts.length === 2);
-                function pick(arr, n) {
-                    return [...arr].sort(() => 0.5 - Math.random()).slice(0, n);
-                }
-                const selectedQuestions = [...pick(mc, 3), ...pick(tf, 2)].sort(() => 0.5 - Math.random());
-                // keep for grading
-                window.selectedQuestions = selectedQuestions;
-                
-                let html = '<h3 style="color: #FF8C00; text-align: center; margin-top: 0;">'
-                         <img src="ohms_law_circle_black.png" style="height:120px; vertical-align:middle; margin-bottom:10px;">
-                         + '<br>Lesson 1 Quick Quiz'
-                         + '</h3>';
-                
-                selectedQuestions.forEach((item, index) => {
-                    html += '<div style="margin-bottom: 15px;">';
-                    html += '<p><strong>' + (index + 1) + '. ' + item.q + '</strong></p>';
-                    item.opts.forEach((opt, i) => {
-                        let isCorrect = (i === item.a) ? 'correct' : 'wrong';
-                        html += '<label style="display: block; cursor: pointer; margin-bottom: 5px;">';
-                        html += '<input type="radio" name="q' + index + '" value="' + isCorrect + '"> ' + opt;
-                        html += '</label>';
-                    });
-                    html += '</div>';
-                });
-                
-                html += '<button onclick="checkQuiz()" style="background-color: #00BFFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;">Check My Answers</button>';
-                html += '<button onclick="loadQuiz()" style="background-color: #666; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; margin-left: 10px;">Reset</button>';
-                html += '<p id="quiz-result" style="font-size: 1.2em; font-weight: bold; color: #FF8C00; margin-top: 15px;"></p>';
-                
-                document.getElementById('quiz-container').innerHTML = html;
-            }
-
-            function checkQuiz() {
-                let score = 0;
-                let resultHtml = '';
-                for(let i=0; i<5; i++) {
-                    let selected = document.querySelector('input[name="q' + i + '"]:checked');
-                    let question = window.selectedQuestions[i];
-                    if (selected && selected.value === "correct") {
-                        score++;
-                        resultHtml += '<p>Q' + (i+1) + ': Correct ✅</p>';
-                    } else {
-                        let correctText = question.opts[question.a];
-                        resultHtml += '<p>Q' + (i+1) + ': Incorrect – correct answer: ' + correctText + '.</p>';
-                    }
-                    resultHtml += '<p style="font-size:0.9em;color:#ccc; margin-top:2px;">' + question.expl + '</p>';
-                }
-                resultHtml = '<p>You scored ' + score + ' out of 5.</p>' + resultHtml;
-                document.getElementById("quiz-result").innerHTML = resultHtml;
-            }
-
-            window.onload = loadQuiz;
-        </script>
+    <!-- HEADER -->
+    <div class="lesson-header">
+        <div class="lesson-badge">⚡ Lesson 1</div>
+        <h1>The Golden Rule<br>of DC Electricity</h1>
     </div>
 
+    <!-- FORMULA -->
+    <div class="formula-banner">
+        <div class="formula-text">
+            <span class="v">Volts</span>
+            <span class="sym">÷</span>
+            <span class="o">Ohms</span>
+            <span class="sym">=</span>
+            <span class="a">Amps</span>
+        </div>
+        <div class="formula-sub">This one rule powers every circuit ever built.</div>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <img src="current_flow_1.png" alt="Volt, Ohm and Amp working together" class="hero-image">
+
+    <!-- VOLT -->
+    <div class="char-card volt" style="animation-delay:0.1s">
+        <img class="char-img" src="char-volt.png" alt="Volt character">
+        <div class="char-text">
+            <div class="char-name">⚡ Volt — The Push</div>
+            <p>Electricity needs a <strong>push</strong> to move.<br>
+            That push is called <strong>Voltage</strong>.<br>
+            No Volt? Nothing moves. Nothing works.</p>
+        </div>
+    </div>
+
+    <!-- OHM -->
+    <div class="char-card ohm" style="animation-delay:0.2s">
+        <img class="char-img" src="char-ohm.png" alt="Ohm character">
+        <div class="char-text">
+            <div class="char-name">🔮 Ohm — The Squeeze</div>
+            <p>The wire pushes <strong>back</strong> against Volt.<br>
+            That pushback is called <strong>Resistance</strong>.<br>
+            More Ohm = less gets through.</p>
+        </div>
+    </div>
+
+    <!-- AMP -->
+    <div class="char-card amp" style="animation-delay:0.3s">
+        <img class="char-img" src="char-amp.png" alt="Amp character">
+        <div class="char-text">
+            <div class="char-name">💧 Amp — The Result</div>
+            <p>What makes it through is called <strong>Current</strong>.<br>
+            Amp doesn't decide anything.<br>
+            <strong>Amp is always the answer.</strong></p>
+        </div>
+    </div>
+
+    <!-- RULE -->
+    <div class="rule-box">
+        <p>That relationship has a name — <strong style="color:white;">Ohm's Law.</strong><br>
+        Control the push. Control the squeeze.<br>
+        The current is what you get.</p>
+        <div class="rule-highlight">
+            <span class="v">Volts</span> ÷ <span class="o">Ohms</span> = <span class="a">Amps</span>
+        </div>
+    </div>
+
+    <!-- WRAPUP -->
+    <div class="wrapup">
+        <h3>📋 Quick Review</h3>
+        <div class="wrapup-row">
+            <img src="char-volt.png" alt="Volt">
+            <p><strong>Volt is the push.</strong> No Volt — nothing happens.</p>
+        </div>
+        <div class="wrapup-row">
+            <img src="char-ohm.png" alt="Ohm">
+            <p><strong>Ohm is the squeeze.</strong> More Ohm means less gets through.</p>
+        </div>
+        <div class="wrapup-row">
+            <img src="char-amp.png" alt="Amp">
+            <p><strong>Amp is the result.</strong> Amp just does the math.</p>
+        </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz-container"></div>
+
+</div>
+
+<script>
+    const questionBank = [
+        { q: "What does Volt do in a circuit?",
+          opts: ["It slows things down.", "It gives the push to move electricity.", "It is the end result."], a: 1,
+          expl: "Volt is the push — it gets everything moving!" },
+        { q: "What do Ohms measure?",
+          opts: ["The push.", "The squeeze (resistance).", "The flow."], a: 1,
+          expl: "Ohms measure resistance — how much the circuit pushes back." },
+        { q: "How do you calculate Amps?",
+          opts: ["Ohms ÷ Volts", "Volts + Ohms", "Volts ÷ Ohms"], a: 2,
+          expl: "Volts ÷ Ohms = Amps. That's Ohm's Law!" },
+        { q: "True or False: You can just add Amps to a circuit.",
+          opts: ["True", "False"], a: 1,
+          expl: "Amps are the result — they come from Volts and Ohms working together." },
+        { q: "True or False: Amps are the result of push meeting squeeze.",
+          opts: ["True", "False"], a: 0,
+          expl: "Yes! Current is what you get after Volt fights through Ohm." },
+        { q: "You increase the Volts but keep Ohms the same. What happens to Amps?",
+          opts: ["They go up.", "They go down.", "They stay the same."], a: 0,
+          expl: "More push with the same squeeze = more flow!" },
+        { q: "You increase the Ohms. What happens to the Amps?",
+          opts: ["They go up.", "They go down.", "They stay the same."], a: 1,
+          expl: "More squeeze means less gets through." },
+        { q: "In A = V ÷ R, what does R stand for?",
+          opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1,
+          expl: "R = Resistance, measured in Ohms." },
+        { q: "True or False: To get more Amps, you increase Volts.",
+          opts: ["True", "False"], a: 0,
+          expl: "More push with the same resistance = more current!" },
+        { q: "True or False: Voltage is measured in Amperes.",
+          opts: ["True", "False"], a: 1,
+          expl: "Voltage is measured in Volts. Amps measure current." },
+        { q: "You cut the Volts in half. What happens to the Amps?",
+          opts: ["They halve too.", "They double.", "Nothing changes."], a: 0,
+          expl: "Less push = less flow. Current follows voltage." },
+        { q: "Which character is always the answer?",
+          opts: ["Volt", "Ohm", "Amp"], a: 2,
+          expl: "Amp is always the result — the answer the circuit produces." }
+    ];
+
+    const MC_COUNT = 3;
+    const TF_COUNT = 2;
+    const TOTAL = MC_COUNT + TF_COUNT;
+
+    function pick(arr, n) {
+        return [...arr].sort(() => 0.5 - Math.random()).slice(0, n);
+    }
+
+    function loadQuiz() {
+        const mc = questionBank.filter(q => q.opts.length > 2);
+        const tf = questionBank.filter(q => q.opts.length === 2);
+        const selected = [...pick(mc, MC_COUNT), ...pick(tf, TF_COUNT)].sort(() => 0.5 - Math.random());
+        window.selectedQuestions = selected;
+
+        let html = '<div class="quiz-header">'
+                 + '<img src="ohms_law_circle_black.png" alt="Ohms Law">'
+                 + '<h3>Quick Quiz — Lesson 1</h3>'
+                 + '</div>';
+
+        selected.forEach((item, i) => {
+            html += '<div class="quiz-q">';
+            html += '<p>' + (i + 1) + '. ' + item.q + '</p>';
+            item.opts.forEach((opt, j) => {
+                html += '<label>'
+                      + '<input type="radio" name="q' + i + '" value="' + j + '">'
+                      + opt
+                      + '</label>';
+            });
+            html += '</div>';
+        });
+
+        html += '<div class="btn-row">'
+              + '<button class="btn btn-check" onclick="checkQuiz()">✅ Check My Answers</button>'
+              + '<button class="btn btn-reset" onclick="loadQuiz()">🔄 New Questions</button>'
+              + '</div>';
+        html += '<div id="quiz-result" style="margin-top:20px;"></div>';
+
+        document.getElementById('quiz-container').innerHTML = html;
+    }
+
+    function checkQuiz() {
+        for (let i = 0; i < TOTAL; i++) {
+            if (!document.querySelector('input[name="q' + i + '"]:checked')) {
+                document.getElementById('quiz-result').innerHTML =
+                    '<div class="warning-msg">⚠️ Answer all ' + TOTAL + ' questions first!</div>';
+                return;
+            }
+        }
+
+        let score = 0;
+        let html = '';
+
+        for (let i = 0; i < TOTAL; i++) {
+            const sel = document.querySelector('input[name="q' + i + '"]:checked');
+            const q = window.selectedQuestions[i];
+            const correct = parseInt(sel.value) === q.a;
+            if (correct) score++;
+
+            html += '<div class="result-card ' + (correct ? 'correct' : 'wrong') + '">';
+            html += '<div class="result-label">'
+                  + (correct ? '✅ Nice work!' : '❌ Not quite — the answer was: <em>' + q.opts[q.a] + '</em>')
+                  + '</div>';
+            html += '<div class="result-expl">' + q.expl + '</div>';
+            html += '</div>';
+        }
+
+        const pct = Math.round((score / TOTAL) * 100);
+        const emoji = score === TOTAL ? '🏆' : score >= 4 ? '⭐' : score >= 3 ? '👍' : '💪';
+        const msg = score === TOTAL ? 'Perfect! You nailed it!'
+                  : score >= 4 ? 'Great job! Almost there!'
+                  : score >= 3 ? 'Good work — keep going!'
+                  : 'Keep practicing — you\'ve got this!';
+
+        html = '<div class="score-banner">'
+             + emoji + ' ' + msg + '<br>'
+             + '<span style="font-size:0.75em; color:#aaa;">'
+             + score + ' out of ' + TOTAL + ' correct (' + pct + '%)</span>'
+             + '</div>' + html;
+
+        document.getElementById('quiz-result').innerHTML = html;
+    }
+
+    window.onload = loadQuiz;
+</script>
 </body>
 </html>
