@@ -80,21 +80,36 @@
         <script>
             // The Question Bank (15 questions)
             const questionBank = [
-                { q: "What does a Volt do in a circuit?", opts: ["It restricts the flow.", "It provides the engine or push.", "It is the result of the flow."], a: 1 },
-                { q: "What do Ohms represent?", opts: ["The push (Pressure).", "The squeeze (Restriction).", "The working flow."], a: 1 },
-                { q: "How do you calculate Amps?", opts: ["Ohms ÷ Volts", "Volts + Ohms", "Volts ÷ Ohms"], a: 2 },
-                { q: "True or False: You can add Amps directly to a circuit.", opts: ["True", "False"], a: 1 },
-                { q: "True or False: Amps are just the result of the push meeting the squeeze.", opts: ["True", "False"], a: 0 },
-                { q: "If you increase the Volts (push) but keep the Ohms the same, what happens to the Amps?", opts: ["They go up.", "They go down.", "They stay the same."], a: 0 },
-                { q: "If you increase the Ohms (restriction), what happens to the flow (Amps)?", opts: ["It increases.", "It decreases.", "It stays the same."], a: 1 },
-                { q: "In the formula A = V / R, what does the 'R' stand for?", opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1 },
-                { q: "Which of these is like the 'water pressure' in our analogy?", opts: ["Amps", "Ohms", "Volts"], a: 2 },
-                { q: "True or False: To get more Amps to flow, you increase the Volts.", opts: ["True", "False"], a: 0 },
-                { q: "True or False: Voltage is measured in Amperes.", opts: ["True", "False"], a: 1 },
-                { q: "Which part of Ohm's law do you rearrange to solve for resistance?", opts: ["R = V / I", "I = V × R", "V = I × R"], a: 0 },
-                { q: "What happens to current if you halve the voltage and keep resistance constant?", opts: ["It halves", "It doubles", "It stays the same"], a: 0 },
-                { q: "True or False: Increasing resistance while holding voltage constant increases current.", opts: ["True", "False"], a: 1 },
-                { q: "Which icon represents the result of the circuit?", opts: ["Volt", "Ohm", "Amp"], a: 2 }
+                { q: "What does a Volt do in a circuit?", opts: ["It restricts the flow.", "It provides the engine or push.", "It is the result of the flow."], a: 1,
+                  expl: "Volt is the push that makes current flow." },
+                { q: "What do Ohms represent?", opts: ["The push (Pressure).", "The squeeze (Restriction).", "The working flow."], a: 1,
+                  expl: "Ohms are resistance; more ohms means less current." },
+                { q: "How do you calculate Amps?", opts: ["Ohms ÷ Volts", "Volts + Ohms", "Volts ÷ Ohms"], a: 2,
+                  expl: "Ohm's law: current equals voltage divided by resistance." },
+                { q: "True or False: You can add Amps directly to a circuit.", opts: ["True", "False"], a: 1,
+                  expl: "Amps are the result of voltage and resistance; you can't just add them." },
+                { q: "True or False: Amps are just the result of the push meeting the squeeze.", opts: ["True", "False"], a: 0,
+                  expl: "Correct – current is the outcome of voltage fighting resistance." },
+                { q: "If you increase the Volts (push) but keep the Ohms the same, what happens to the Amps?", opts: ["They go up.", "They go down.", "They stay the same."], a: 0,
+                  expl: "Higher voltage pushes more current through the same resistance." },
+                { q: "If you increase the Ohms (restriction), what happens to the flow (Amps)?", opts: ["It increases.", "It decreases.", "It stays the same."], a: 1,
+                  expl: "More resistance reduces the current for the same voltage." },
+                { q: "In the formula A = V / R, what does the 'R' stand for?", opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1,
+                  expl: "'R' is resistance, measured in ohms." },
+                { q: "Which of these is most like voltage?", opts: ["Amps", "Ohms", "Volts"], a: 2,
+                  expl: "Voltage is the push or pressure in the circuit." },
+                { q: "True or False: To get more Amps to flow, you increase the Volts.", opts: ["True", "False"], a: 0,
+                  expl: "With resistance constant, increasing voltage raises current." },
+                { q: "True or False: Voltage is measured in Amperes.", opts: ["True", "False"], a: 1,
+                  expl: "Voltage is measured in volts; amperes measure current." },
+                { q: "Which part of Ohm's law do you rearrange to solve for resistance?", opts: ["R = V / I", "I = V × R", "V = I × R"], a: 0,
+                  expl: "Solving for R gives R = V / I." },
+                { q: "What happens to current if you halve the voltage and keep resistance constant?", opts: ["It halves", "It doubles", "It stays the same"], a: 0,
+                  expl: "Current is proportional to voltage, so it halves." },
+                { q: "True or False: Increasing resistance while holding voltage constant increases current.", opts: ["True", "False"], a: 1,
+                  expl: "More resistance lowers current when voltage doesn't change." },
+                { q: "Which icon represents the result of the circuit?", opts: ["Volt", "Ohm", "Amp"], a: 2,
+                  expl: "Amp represents current, the result of the circuit." }
             ];
 
             function loadQuiz() {
@@ -105,11 +120,19 @@
                     return [...arr].sort(() => 0.5 - Math.random()).slice(0, n);
                 }
                 const selectedQuestions = [...pick(mc, 3), ...pick(tf, 2)].sort(() => 0.5 - Math.random());
+                // keep for grading
+                window.selectedQuestions = selectedQuestions;
                 
                 let html = '<h3 style="color: #FF8C00; text-align: center; margin-top: 0;">'
-                         + '<img src="icon-volt.png" style="height:60px;vertical-align:middle;margin-right:5px;">'
-                         + 'Lesson 1 Quick Quiz '
-                         + '<img src="icon-amp.png" style="height:60px;vertical-align:middle;margin-left:5px;">'
+                         + '<span style="display:inline-block; position:relative; margin-right:10px;">'
+                         + '<img src="icon-ohm.png" style="height:60px; vertical-align:middle;">'
+                         + '</span>'
+                         + '<span style="display:inline-block; position:relative;">'
+                         + '<span style="font-size:60px; line-height:1;">÷</span>'
+                         + '<img src="icon-volt.png" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); height:30px;">'
+                         + '<img src="icon-amp.png" style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); height:25px;">'
+                         + '</span>'
+                         + '<br>Lesson 1 Quick Quiz'
                          + '</h3>';
                 
                 selectedQuestions.forEach((item, index) => {
@@ -133,13 +156,21 @@
 
             function checkQuiz() {
                 let score = 0;
+                let resultHtml = '';
                 for(let i=0; i<5; i++) {
                     let selected = document.querySelector('input[name="q' + i + '"]:checked');
+                    let question = window.selectedQuestions[i];
                     if (selected && selected.value === "correct") {
                         score++;
+                        resultHtml += '<p>Q' + (i+1) + ': Correct ✅</p>';
+                    } else {
+                        let correctText = question.opts[question.a];
+                        resultHtml += '<p>Q' + (i+1) + ': Incorrect – correct answer: ' + correctText + '.</p>';
                     }
+                    resultHtml += '<p style="font-size:0.9em;color:#ccc; margin-top:2px;">' + question.expl + '</p>';
                 }
-                document.getElementById("quiz-result").innerText = "You scored " + score + " out of 5!";
+                resultHtml = '<p>You scored ' + score + ' out of 5.</p>' + resultHtml;
+                document.getElementById("quiz-result").innerHTML = resultHtml;
             }
 
             window.onload = loadQuiz;
