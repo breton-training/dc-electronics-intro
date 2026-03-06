@@ -1,0 +1,41 @@
+<svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="250" fill="#2d2d2d"/>
+  
+  <!-- Volt (Orange) -->
+  <circle cx="100" cy="125" r="50" fill="#FF8C00"/>
+  <text x="100" y="135" font-size="24" font-weight="bold" fill="white" text-anchor="middle">V</text>
+  <text x="100" y="190" font-size="14" fill="#FF8C00" text-anchor="middle" font-weight="bold">VOLT</text>
+  <text x="100" y="210" font-size="12" fill="#aaa" text-anchor="middle">Push</text>
+  
+  <!-- Arrow from Volt to Ohm -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#FF8C00" />
+    </marker>
+  </defs>
+  <line x1="150" y1="125" x2="220" y2="125" stroke="#FF8C00" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Ohm (Purple) -->
+  <circle cx="300" cy="125" r="50" fill="#8A2BE2"/>
+  <text x="300" y="135" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Ω</text>
+  <text x="300" y="190" font-size="14" fill="#8A2BE2" text-anchor="middle" font-weight="bold">OHM</text>
+  <text x="300" y="210" font-size="12" fill="#aaa" text-anchor="middle">Resistance</text>
+  
+  <!-- Arrow from Ohm to Amp -->
+  <defs>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#8A2BE2" />
+    </marker>
+  </defs>
+  <line x1="350" y1="125" x2="420" y2="125" stroke="#8A2BE2" stroke-width="3" marker-end="url(#arrowhead2)"/>
+  
+  <!-- Amp (Blue) -->
+  <circle cx="500" cy="125" r="50" fill="#00BFFF"/>
+  <text x="500" y="135" font-size="24" font-weight="bold" fill="white" text-anchor="middle">A</text>
+  <text x="500" y="190" font-size="14" fill="#00BFFF" text-anchor="middle" font-weight="bold">AMP</text>
+  <text x="500" y="210" font-size="12" fill="#aaa" text-anchor="middle">Current</text>
+  
+  <!-- Formula at bottom -->
+  <text x="300" y="245" font-size="16" fill="#e0e0e0" text-anchor="middle" font-weight="bold">Volts ÷ Ohms = Amps</text>
+</svg>
