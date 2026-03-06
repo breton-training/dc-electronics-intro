@@ -68,15 +68,17 @@
             <p style="font-size: 1.1em; line-height: 1.6; color: #e0e0e0;">
                 Before you test your knowledge, let's review:<br><br>
                 Meet the three characters that run every DC circuit:<br><br>
-                <img src="icon-volt.png" alt="Volt Icon" style="height: 45px; vertical-align: middle; margin-right: 5px;"> <strong>Volt is the push.</strong> Volt is what gets things moving. No Volt, nothing happens.<br><br>
-                <img src="icon-ohm.png" alt="Ohm Icon" style="height: 45px; vertical-align: middle; margin-right: 5px;"> <strong>Ohm is the squeeze.</strong> Ohm pushes back against Volt. More Ohm means less gets through.<br><br>
-                <img src="icon-amp.png" alt="Amp Icon" style="height: 45px; vertical-align: middle; margin-right: 5px;"> <strong>Amp is the result.</strong> Amp is what you actually get after Volt fights through Ohm. Amp doesn't decide anything — Amp is what the circuit produces.<br><br>
+                <img src="icon-volt.png" alt="Volt Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Volt is the push.</strong> Volt is what gets things moving. No Volt, nothing happens.<br><br>
+                <img src="icon-ohm.png" alt="Ohm Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Ohm is the squeeze.</strong> Ohm pushes back against Volt. More Ohm means less gets through.<br><br>
+                <img src="icon-amp.png" alt="Amp Icon" style="height: 60px; vertical-align: middle; margin-right: 5px;"> <strong>Amp is the result.</strong> Amp is what you actually get after Volt fights through Ohm. Amp doesn't decide anything — Amp is what the circuit produces.<br><br>
                 This is why the rule is: <strong style="color: white;">Volts ÷ Ohms = Amps</strong><br><br>
                 Amp is always the answer. You can control Volt. You can control Ohm. Amp just does the math.
             </p>
         </div>
+        <!-- quiz container will be populated by script -->
+        <div id="quiz-container" style="margin-top:40px;"></div>
         <script>
-            // The Question Bank
+            // The Question Bank (15 questions)
             const questionBank = [
                 { q: "What does a Volt do in a circuit?", opts: ["It restricts the flow.", "It provides the engine or push.", "It is the result of the flow."], a: 1 },
                 { q: "What do Ohms represent?", opts: ["The push (Pressure).", "The squeeze (Restriction).", "The working flow."], a: 1 },
@@ -87,14 +89,28 @@
                 { q: "If you increase the Ohms (restriction), what happens to the flow (Amps)?", opts: ["It increases.", "It decreases.", "It stays the same."], a: 1 },
                 { q: "In the formula A = V / R, what does the 'R' stand for?", opts: ["Result", "Resistance (Ohms)", "Rate"], a: 1 },
                 { q: "Which of these is like the 'water pressure' in our analogy?", opts: ["Amps", "Ohms", "Volts"], a: 2 },
-                { q: "To get more Amps to flow, you could...", opts: ["Increase the Ohms", "Decrease the Volts", "Increase the Volts"], a: 2 }
+                { q: "True or False: To get more Amps to flow, you increase the Volts.", opts: ["True", "False"], a: 0 },
+                { q: "True or False: Voltage is measured in Amperes.", opts: ["True", "False"], a: 1 },
+                { q: "Which part of Ohm's law do you rearrange to solve for resistance?", opts: ["R = V / I", "I = V × R", "V = I × R"], a: 0 },
+                { q: "What happens to current if you halve the voltage and keep resistance constant?", opts: ["It halves", "It doubles", "It stays the same"], a: 0 },
+                { q: "True or False: Increasing resistance while holding voltage constant increases current.", opts: ["True", "False"], a: 1 },
+                { q: "Which icon represents the result of the circuit?", opts: ["Volt", "Ohm", "Amp"], a: 2 }
             ];
 
             function loadQuiz() {
-                const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
-                const selectedQuestions = shuffled.slice(0, 5);
+                // pick 3 multiple-choice and 2 true/false questions
+                const mc = questionBank.filter(q => q.opts.length > 2);
+                const tf = questionBank.filter(q => q.opts.length === 2);
+                function pick(arr, n) {
+                    return [...arr].sort(() => 0.5 - Math.random()).slice(0, n);
+                }
+                const selectedQuestions = [...pick(mc, 3), ...pick(tf, 2)].sort(() => 0.5 - Math.random());
                 
-                let html = '<h3 style="color: #FF8C00; text-align: center; margin-top: 0;">Lesson 1 Quick Quiz</h3>';
+                let html = '<h3 style="color: #FF8C00; text-align: center; margin-top: 0;">'
+                         + '<img src="icon-volt.png" style="height:60px;vertical-align:middle;margin-right:5px;">'
+                         + 'Lesson 1 Quick Quiz '
+                         + '<img src="icon-amp.png" style="height:60px;vertical-align:middle;margin-left:5px;">'
+                         + '</h3>';
                 
                 selectedQuestions.forEach((item, index) => {
                     html += '<div style="margin-bottom: 15px;">';
@@ -109,7 +125,7 @@
                 });
                 
                 html += '<button onclick="checkQuiz()" style="background-color: #00BFFF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;">Check My Answers</button>';
-                html += '<button onclick="loadQuiz()" style="background-color: #666; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; margin-left: 10px;">Retake Quiz</button>';
+                html += '<button onclick="loadQuiz()" style="background-color: #666; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; margin-left: 10px;">Reset</button>';
                 html += '<p id="quiz-result" style="font-size: 1.2em; font-weight: bold; color: #FF8C00; margin-top: 15px;"></p>';
                 
                 document.getElementById('quiz-container').innerHTML = html;
