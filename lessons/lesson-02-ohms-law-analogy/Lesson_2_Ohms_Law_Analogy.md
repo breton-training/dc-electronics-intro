@@ -1,0 +1,1 @@
+**The Golden Rule:** You can make more power. You can make more restriction. But you **cannot** just create more flow. Flow is strictly a result—a _product_—of how the Volts (power) and the Ohms (restriction) fight each other.

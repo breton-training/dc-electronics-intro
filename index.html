@@ -2,10 +2,305 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=lessons/lesson-01-ohms-law/index.html">
-    <title>DC Electronics Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Electronics Intro — Breton Training</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --volt-gold: #f5c842;
+            --volt-glow: #fde68a;
+            --ohm-purple: #9b59b6;
+            --ohm-glow: #d2b4de;
+            --amp-blue: #3498db;
+            --amp-glow: #aed6f1;
+            --bg-dark: #0f1724;
+            --bg-card: #1a2538;
+            --text-light: #e8ecf1;
+            --text-muted: #8a9bb5;
+            --border-subtle: rgba(255,255,255,0.08);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* === BACKGROUND CIRCUIT PATTERN === */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(245,200,66,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(52,152,219,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(155,89,182,0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === HEADER === */
+        .site-header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .site-header h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .site-header h1 .emoji-bolt { color: var(--volt-gold); }
+
+        .site-header .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .age-badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* === CHARACTER STRIP === */
+        .character-strip {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 20px 24px 40px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .char-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .char-badge:nth-child(1) { animation-delay: 0.15s; }
+        .char-badge:nth-child(2) { animation-delay: 0.3s; }
+        .char-badge:nth-child(3) { animation-delay: 0.45s; }
+
+        .char-badge img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 3px solid var(--border-subtle);
+            background: var(--bg-card);
+            padding: 4px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .char-badge:hover img { transform: scale(1.1); }
+        .char-badge.volt:hover img { border-color: var(--volt-gold); }
+        .char-badge.ohm:hover img { border-color: var(--ohm-purple); }
+        .char-badge.amp:hover img { border-color: var(--amp-blue); }
+
+        .char-badge span {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .char-badge.volt span { color: var(--volt-gold); }
+        .char-badge.ohm span { color: var(--ohm-purple); }
+        .char-badge.amp span { color: var(--amp-blue); }
+
+        /* === LESSONS SECTION === */
+        .section-label {
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lessons-grid {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lesson-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--volt-gold);
+            box-shadow: 0 4px 24px rgba(245,200,66,0.08);
+        }
+
+        .lesson-number {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--volt-gold);
+            min-width: 40px;
+        }
+
+        .lesson-info h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .lesson-info p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .lesson-arrow {
+            margin-left: auto;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .lesson-card:hover .lesson-arrow {
+            transform: translateX(4px);
+            color: var(--volt-gold);
+        }
+
+        /* === COMING SOON === */
+        .lesson-card.coming-soon {
+            opacity: 0.45;
+            pointer-events: none;
+            animation-delay: 0.75s;
+        }
+        .lesson-card.coming-soon .lesson-number {
+            color: var(--text-muted);
+        }
+
+        /* === FOOTER === */
+        .site-footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-subtle);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 480px) {
+            .site-header { padding: 40px 20px 28px; }
+            .character-strip { gap: 20px; }
+            .char-badge img { width: 64px; height: 64px; }
+            .lesson-card { padding: 16px 18px; gap: 14px; }
+        }
+    </style>
 </head>
 <body>
-    <p><a href="lessons/lesson-01-ohms-law/index.html">Go to Lesson 1: Ohm's Law</a></p>
+
+    <header class="site-header">
+        <h1><span class="emoji-bolt">⚡</span> DC Electronics Intro</h1>
+        <p class="subtitle">Learn the foundations of DC electricity with Volt, Ohm, and Amp — three characters who make the invisible make sense.</p>
+        <div class="age-badge">Designed for ages 7–12</div>
+    </header>
+
+    <section class="character-strip">
+        <div class="char-badge volt">
+            <img src="characters/char-volt.png" alt="Volt — The Push">
+            <span>⚡ Volt</span>
+        </div>
+        <div class="char-badge ohm">
+            <img src="characters/char-ohm.png" alt="Ohm — The Squeeze">
+            <span>🔮 Ohm</span>
+        </div>
+        <div class="char-badge amp">
+            <img src="characters/char-amp.png" alt="Amp — The Result">
+            <span>💧 Amp</span>
+        </div>
+    </section>
+
+    <div class="section-label">Lessons</div>
+
+    <section class="lessons-grid">
+
+        <a href="lessons/lesson-01-ohms-law/index.html" class="lesson-card">
+            <div class="lesson-number">01</div>
+            <div class="lesson-info">
+                <h3>The Golden Rule — Ohm's Law</h3>
+                <p>Meet Volt, Ohm, and Amp. Learn the one rule that explains how every DC circuit works.</p>
+            </div>
+            <div class="lesson-arrow">→</div>
+        </a>
+
+        <div class="lesson-card coming-soon">
+            <div class="lesson-number">02</div>
+            <div class="lesson-info">
+                <h3>Series Circuits</h3>
+                <p>Coming soon</p>
+            </div>
+        </div>
+
+        <div class="lesson-card coming-soon">
+            <div class="lesson-number">03</div>
+            <div class="lesson-info">
+                <h3>Parallel Circuits</h3>
+                <p>Coming soon</p>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="site-footer">
+        &copy; 2025 Breton Training &middot; Built for learners, not test-takers.
+    </footer>
+
 </body>
 </html>
